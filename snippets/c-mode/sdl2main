@@ -1,0 +1,50 @@
+# -*- mode: snippet -*-
+# name: sdl2 main func
+# key: sdlmain
+# --
+
+int main()
+{
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        fprintf(stderr, "sdl2 initialzation error: %s\n", SDL_GetError());
+        return EXIT_FAILURE;
+    }
+
+    SDL_Window *window = SDL_CreateWindow("$1",
+                                          100, 100,
+                                          WIDTH, HEIGHT,
+                                          SDL_WINDOW_SHOWN);
+    if (window == NULL) {
+        fprintf(stderr, "Couldn't create SDL_Window: %s\n", SDL_GetError()); 
+        return EXIT_FAILURE;
+    }
+
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1,
+                                                SDL_RENDERER_ACCELERATED
+                                                | SDL_RENDERER_PRESENTVSYNC);
+    if (renderer == NULL) {
+        fprintf(stderr, "Couldn't create SDL_Renderer: %s\n", SDL_GetError()); 
+        return EXIT_FAILURE;
+    }
+
+    SDL_Event e;
+    while (game.state != QUIT) {
+        while (SDL_PollEvent(&e)) {
+            switch (e.type) {
+            case SDL_QUIT:
+                game.state = QUIT;
+                break;
+            default: {}
+            }
+        }
+
+        SDL_SetRenderDrawColor(renderer, 100,100,100,255);
+        SDL_RenderClear(renderer);
+        SDL_RenderPresent(renderer);
+    }
+
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    
+    return EXIT_SUCCESS;
+}
