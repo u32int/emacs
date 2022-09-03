@@ -20,6 +20,7 @@
 		term-mode-hook
 		eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
+(setq evil-insert-state-cursor nil) ; disable evil mode thin cursor on insert
 
 ; editor behaviour
 (setq auto-save-default nil)
