@@ -10,17 +10,16 @@
 (menu-bar-mode -1)
 
 ; configure UI
-(column-number-mode) ; enable column display in the modebar
-(global-display-line-numbers-mode t)
-(setq display-line-numbers-type 'relative)
+(column-number-mode) ;; enable column display in the modebar
+(global-display-line-numbers-mode t) ;; add numbers to the left side
 (set-fringe-mode 2)              ; side padding
-(set-face-attribute 'default nil :font "JetBrains Mono Nerd Font" :height 135)
+(set-face-attribute 'default nil :font "JetBrains Mono Nerd Font" :height 140)
 (dolist (mode '(org-mode-hook ; disable line numbers in some buffer types
 		vterm-mode-hook
 		term-mode-hook
 		eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-(setq evil-insert-state-cursor nil) ; disable evil mode thin cursor on insert
+(setq display-line-numbers-type 'relative)
 
 ; editor behaviour
 (setq auto-save-default nil)
@@ -179,6 +178,7 @@
   :init
   (setq lsp-keymap-prefix "C-l")
   :hook (
+         ; (python-mode . lsp) ; got elpy for that
          (c-mode . lsp)
          (c++-mode . lsp)
          (rustic-mode . lsp)
@@ -290,8 +290,6 @@
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
